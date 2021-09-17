@@ -1,0 +1,23 @@
+
+line: 34 + 89 - x * y23
+34 :NUMBER
++ :SYMBOL
+89 :NUMBER
+- :SYMBOL
+x :IDENTIFIER 
+* :SYMBOL
+y23 :IDENTIFIER 
+
+line: cxo6y / 67z23 * 56& 34 * x
+cxo6y :IDENTIFIER 
+/ :SYMBOL
+z23 :IDENTIFIER 
+67 :NUMBER
+* :SYMBOL
+56 :NUMBER
+ERROR TOKEN: "&"
+
+line: 2 + x
+2 :NUMBER
++ :SYMBOL
+x :IDENTIFIER 
