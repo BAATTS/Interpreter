@@ -1,6 +1,5 @@
 # Programmer: Jorge Zepeda
-# Phase 1.1
-# testing git push
+# Phase 1.2
 
 
 import re
@@ -21,42 +20,63 @@ def identifiers(filewriter, token):
     match = re.findall(identifiers_regex, token)
 
     if match:
-        filewriter.write(str(match[0]) + " :IDENTIFIER \n")
-        token = token.replace(match[0], '')
+        filewriter.write(match[0] + " :IDENTIFIER " + "\n")
+        return match[0]
+    else:
+        return ''
 
 
 # Detecting the numbers
 def numbers(filewriter, token):
     numbers_regex = "[0-9]+"
 
-    match = re.match(numbers_regex, token)
+    match = re.findall(numbers_regex, token)
 
     if match:
-        filewriter.write(str(match[0]) + " :NUMBER" + "\n")
-        token = token.replace(match[0], '')
+        filewriter.write(match[0] + " :NUMBER " + "\n")
+        return match[0]
+    else:
+        return ''
 
 
 # Detecting the symbols
 def symbols(filewriter, token):
-    symbols_regex = "\\+|\\-|\\*|\\/|\\(||\\)"
+    symbols_regex = "\\+ | \\- | \\* | \\/ | \\( | \\) | \\:= | \\;"
 
-    match = re.fullmatch(symbols_regex, token)
+    match = re.findall(symbols_regex, token)
 
     if match:
-        filewriter.write(str(token) + " :SYMBOL" + "\n")
-        token = token.replace(match[0], '')
+        filewriter.write(match[0] + " :SYMBOL " + "\n")
+        return match[0]
+    else:
+        return ''
 
 
+# Detecting the keywords
+def keywords(filewriter, token):
+    keywords_regex = "if|then|else|endif|while|do|endwhile|skip"
+
+    match = re.fullmatch(keywords_regex, token)
+
+    if match:
+        filewriter.write(match[0] + " :KEYWORD" + "\n")
+        return match[0]
+    else:
+        return ''
+
+
+# Searches through all language
 def search(filewriter, token):
     identifiers(filewriter, token)
     numbers(filewriter, token)
     symbols(filewriter, token)
+    keywords(filewriter, token)
 
 
 if __name__ == '__main__':
     file = openfile()
     filewriter = open(sys.argv[2], 'w')
-    errorTokens = re.compile('[@_!#%^&<>?}{~:]')
+    errorTokens = re.compile('[.@_!#$%^&<>?}{~]')
 
     for line in file:
         line = line.strip()
