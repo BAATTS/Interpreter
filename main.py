@@ -67,10 +67,10 @@ def keywords(filewriter, token):
 
 # Searches through all language
 def search(filewriter, token):
-    identifiers(filewriter, token)
+    if keywords(filewriter, token) == '':
+        identifiers(filewriter, token)
     numbers(filewriter, token)
     symbols(filewriter, token)
-    keywords(filewriter, token)
 
 
 if __name__ == '__main__':
